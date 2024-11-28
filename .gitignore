@@ -1,0 +1,13 @@
+# Ignore web content
+web/
+wp-content/
+
+# Ignore misc files
+*.bak
+*.code-workspace
+*.env
+*.log
+*.old
+*.sql
+*.vscode
+**/.DS_store
