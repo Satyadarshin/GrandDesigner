@@ -34,13 +34,13 @@ for element in "${required_vars[@]}"; do
     fi
 done
 
-echo "Sync plugins, themes, and uploaded files (excluding custom theme and booking plugin because they are managed by Git)"
+echo "Sync plugins, themes, and uploaded files (excluding custom theme because it is managed by Git)"
 rsync -a --progress --delete $prod_path/wp-content/languages/ $dev_path/wp-content/languages/
 rsync -a --progress --delete $prod_path/wp-content/uploads/ $dev_path/wp-content/uploads/
 rsync -a --progress --delete $prod_path/wp-content/uploads-webpc/ $dev_path/wp-content/uploads-webpc/
 
-echo "Back up the dev DB to $dev_host_backup_dir/adhi-dev.sql"
-$wp $dev_alias db export - > $dev_host_backup_dir/adhi-dev.sql
+echo "Back up the dev DB to $dev_host_backup_dir/stdn-dev.sql"
+$wp $dev_alias db export - > $dev_host_backup_dir/stdn-dev.sql
 
 $wp $dev_alias db reset --yes
 echo "Import the prod DB into dev"
@@ -56,7 +56,6 @@ $wp $dev_alias search-replace $prod_url $dev_url --recurse-objects --skip-column
 
 echo "Deactivate plugins which shouldn't be enabled on dev"
 $wp $dev_alias plugin deactivate updraftplus
-$wp $dev_alias plugin deactivate w3-total-cache
 
 # echo "Activate plugins which should be enabled on dev"
 # $wp $dev_alias plugin install --activate  query-monitor
