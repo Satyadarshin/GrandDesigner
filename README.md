@@ -1,7 +1,7 @@
-# Adhisthana WordPress Docker Development Environment
+# GrandDesigner WordPress Docker Development Environment
 
 This repository contains the Docker configuration for the development environment of 
-the Adhisthana WordPress site. It mimicks the production server environment, 
+the GrandDesigner WordPress site. It mimicks the production server environment, 
 allowing us to have some confidence that if the code works in development, it should also work in production. 
 
 To set up the Docker development environment, follow the setup instructions below.
@@ -21,7 +21,7 @@ Once you've got the Docker system up and running, follow the instructions in `sy
 
 #### 1. Clone the Repository:
 
-Clone this `adhisthana-docker-dev` repository to your local machine:
+Clone this `GrandDesigner-docker-dev` repository to your local machine:
 
 ```bash
 git clone <repository-url>
@@ -29,15 +29,15 @@ git clone <repository-url>
 
 #### 2. Install the Web Directory:
 
-Obtain a copy of the website files, and place them in `adhisthana-docker-dev/web/`
+Obtain a copy of the website files, and place them in `GrandDesigner-docker-dev/web/`
 
 #### 3. Create the `.env` File and Configure Variables:
 
-In the `adhisthana-docker-dev` directory, copy `.env-example` to `.env` and set the database details. When you first start the Docker system, it will create a new database with the details you've specified. You can set the `MARIABD_*` variables to whatever you like with the exception of `MARIADB_HOST` which has to stay set as the name of the MariaDB container (defined in `docker-compose.yml`). The database passwords should be 16 characters randomly generated. 
+In the `GrandDesigner-docker-dev` directory, copy `.env-example` to `.env` and set the database details. When you first start the Docker system, it will create a new database with the details you've specified. You can set the `MARIABD_*` variables to whatever you like with the exception of `MARIADB_HOST` which has to stay set as the name of the MariaDB container (defined in `docker-compose.yml`). The database passwords should be 16 characters randomly generated. 
 
 #### 4. Configure SMTP settings
 
-Ask the website developer (or whoever manages Google Workspace for the adhisthana.org domain) to generate a new 'app password' for you 
+Ask the website developer (or whoever manages Google Workspace for the GrandDesigner.org domain) to generate a new 'app password' for you 
 and enter the SMTP credentials that they give you into the `.env` file.
 
 #### 5. Configure the Email Address for Development:
@@ -54,7 +54,7 @@ Replace `'dev@example.com'` with your email address.
 
 #### 6. Start the Docker Containers:
 
-Run the following command from the `adhisthana-docker-dev` directory to start
+Run the following command from the `GrandDesigner-docker-dev` directory to start
 the Docker containers:
 
 ```bash

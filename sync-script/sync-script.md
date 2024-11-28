@@ -1,7 +1,7 @@
 # Setup WP-CLI and the syncing script
 
 ## Intro
-We use a shell script (`sync-script/sync-adhi-prod-to-dev.sh`) 
+We use a shell script (`sync-script/sync-satyadrashin-prod-to-dev.sh`) 
 to sync the database and files from the production site into your dev environment. 
 It's a good idea to run this from time to time to ensure your dev environment is 
 accurately mirroring the production site.

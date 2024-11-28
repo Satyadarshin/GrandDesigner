@@ -1,9 +1,10 @@
 #! /bin/bash
 #
-# Sync files and DB for the Adhisthana site FROM the production system (prod) TO the local development system (dev)
+# Sync files and DB from satyadarshin.com FROM the production system (prod) TO the local development system (dev)
 # See docs for required setup before running this script.
 #
-# @author Vilasamuni <vilasamuni@adhisthana.org>
+# @author Satyadarshin <s.dog@satyadarshin.com>
+# Adapted from a project for Adhisthana retreat centre by Vilasamuni <vilasamuni@adhisthana.org>
 #
 
 # Read config from .env file
@@ -35,8 +36,6 @@ done
 
 echo "Sync plugins, themes, and uploaded files (excluding custom theme and booking plugin because they are managed by Git)"
 rsync -a --progress --delete $prod_path/wp-content/languages/ $dev_path/wp-content/languages/
-rsync -a --progress --exclude 'paypal-event-booking' $prod_path/wp-content/plugins/ $dev_path/wp-content/plugins/
-rsync -a --progress --exclude 'adhisthana' $prod_path/wp-content/themes/ $dev_path/wp-content/themes/
 rsync -a --progress --delete $prod_path/wp-content/uploads/ $dev_path/wp-content/uploads/
 rsync -a --progress --delete $prod_path/wp-content/uploads-webpc/ $dev_path/wp-content/uploads-webpc/
 
