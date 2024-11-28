@@ -1,12 +1,12 @@
 # GrandDesigner WordPress Docker Development Environment
 
 This repository contains the Docker configuration for the development environment of 
-the GrandDesigner WordPress site. It mimicks the production server environment, 
+the www.satyadarshin.com WordPress site. It mimicks the production server environment, 
 allowing us to have some confidence that if the code works in development, it should also work in production. 
 
 To set up the Docker development environment, follow the setup instructions below.
 
-We use a shell script (`sync-script/sync-adhi-prod-to-dev.sh`) 
+We use a shell script (`sync-script/sync-satyadarshin-prod-to-dev.sh`) 
 to sync the database and files from the production site into your dev environment. 
 Once you've got the Docker system up and running, follow the instructions in `sync-script/sync-script.md` to set up the script.
 
@@ -21,7 +21,7 @@ Once you've got the Docker system up and running, follow the instructions in `sy
 
 #### 1. Clone the Repository:
 
-Clone this `GrandDesigner-docker-dev` repository to your local machine:
+Clone this `GrandDesigner` repository to your local machine:
 
 ```bash
 git clone <repository-url>
@@ -29,15 +29,15 @@ git clone <repository-url>
 
 #### 2. Install the Web Directory:
 
-Obtain a copy of the website files, and place them in `GrandDesigner-docker-dev/web/`
+Obtain a copy of the website files, and place them in `GrandDesigner/web/`
 
 #### 3. Create the `.env` File and Configure Variables:
 
-In the `GrandDesigner-docker-dev` directory, copy `.env-example` to `.env` and set the database details. When you first start the Docker system, it will create a new database with the details you've specified. You can set the `MARIABD_*` variables to whatever you like with the exception of `MARIADB_HOST` which has to stay set as the name of the MariaDB container (defined in `docker-compose.yml`). The database passwords should be 16 characters randomly generated. 
+In the `GrandDesigner` directory, copy `.env-example` to `.env` and set the database details. When you first start the Docker system, it will create a new database with the details you've specified. You can set the `MARIABD_*` variables to whatever you like with the exception of `MARIADB_HOST` which has to stay set as the name of the MariaDB container (defined in `docker-compose.yml`). The database passwords should be 16 characters randomly generated. 
 
 #### 4. Configure SMTP settings
 
-Ask the website developer (or whoever manages Google Workspace for the GrandDesigner.org domain) to generate a new 'app password' for you 
+Ask the website developer (or whoever manages Google Workspace for the satyadarshin.com domain) to generate a new 'app password' for you 
 and enter the SMTP credentials that they give you into the `.env` file.
 
 #### 5. Configure the Email Address for Development:
@@ -54,11 +54,11 @@ Replace `'dev@example.com'` with your email address.
 
 #### 6. Start the Docker Containers:
 
-Run the following command from the `GrandDesigner-docker-dev` directory to start
+Run the following command from the `GrandDesigner` directory to start
 the Docker containers:
 
 ```bash
-docker compose up
+docker compose up -d
 ```
 
 > **Note**: The first run may take some time while Docker downloads and installs the necessary
