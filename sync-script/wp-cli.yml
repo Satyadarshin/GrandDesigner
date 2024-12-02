@@ -6,15 +6,19 @@
 # An alias can include 'user', 'url', 'path', 'ssh', or 'http'
 
 # @see https://make.wordpress.org/cli/handbook/guides/running-commands-remotely/#docker
-@adhi-local:
-  # ssh: docker:adhi-cli
+@stdn-lcl:
+  # ssh: docker:stdn-cli
   ssh: docker-compose:wp-cli
   path: /var/www/html
 
-@adhi-dev:
-    ssh: adhi-dev
-    path: /var/www/dev.adhisthana.org/web
+@stdn-dev:
+    ssh: stdn-dev
+    path: /Users/aeneas/Satyadarshin/GrandDesigner/web/public_html
 
-@adhi-prod:
-    ssh: adhi-prod
-    path: /var/www/adhisthana.org/web
+@stdn-prd:
+    ssh: sdog
+    path: /www/satyadarshin.com/public_html
+
+@stdn-stg:
+    ssh: sdog
+    path: /www/staging5.satyadarshin.com/public_html

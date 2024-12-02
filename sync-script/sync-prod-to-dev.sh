@@ -16,14 +16,16 @@ echo "Check env vars are set"
 required_vars=(
     "wp"
     "dev_alias"
+    "staging_alias"
     "prod_alias"
     "dev_url"
+    "staging_url"
     "prod_url"
-    "prod_host"
+    "remote_host"
     "dev_path"
+    "staging_path"
     "prod_path"
     "dev_host_backup_dir"
-    "dev_email"
 )
 for element in "${required_vars[@]}"; do
     if [[ -n ${!element} ]]; then
@@ -35,9 +37,8 @@ for element in "${required_vars[@]}"; do
 done
 
 echo "Sync plugins, themes, and uploaded files (excluding custom theme because it is managed by Git)"
-rsync -a --progress --delete $prod_path/wp-content/languages/ $dev_path/wp-content/languages/
 rsync -a --progress --delete $prod_path/wp-content/uploads/ $dev_path/wp-content/uploads/
-rsync -a --progress --delete $prod_path/wp-content/uploads-webpc/ $dev_path/wp-content/uploads-webpc/
+rsync -a --progress --delete $prod_path/wp-content/plugins/ $dev_path/wp-content/plugins/
 
 echo "Back up the dev DB to $dev_host_backup_dir/stdn-dev.sql"
 $wp $dev_alias db export - > $dev_host_backup_dir/stdn-dev.sql
