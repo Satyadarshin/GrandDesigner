@@ -1,4 +1,4 @@
-# GrandDesigner WordPress Docker Development Environment
+# GrandDesigner Docker development environment
 
 This repository contains the Docker configuration for the development environment of the www.satyadarshin.com WordPress site. It mimicks the production server environment, allowing us to have some confidence that if the code works in development, it should also work in production. 
 
