@@ -6,12 +6,12 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-apache
     build: './apache/'
     ports:
-      - 8000:80
+      - 8889:80
       - 443:443
     volumes:
-      - ./web/public_html:/var/www/html
+      - wp-content:/var/www/html
     depends_on:
-      - php-fpm
+      - wordpress
       - db
     # networks:
     #   - frontend
@@ -29,33 +29,25 @@ services:
     ports:
       - 3306:3306
     volumes:
-      # - ./db/data:/var/lib/mysql    
       - db-data:/var/lib/mysql
-      # - ./db/import:/docker-entrypoint-initdb.d # Put .sql files here to auto-import when the container is first built
     # networks:
     #   - backend
 
-  # @see https://thriveread.com/docker-apache-httpd-with-php-fpm-and-mysql/
-  php-fpm:
-    container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
-    build: 
-      context: './php-fpm/'
-      args:
-        SMTP_USER: ${SMTP_USER}
-        SMTP_PASSWORD: ${SMTP_PASSWORD}
-    user: 1000:1000
+  wordpress:
+    container_name: ${COMPOSE_PROJECT_NAME}-wp
+    image: wordpress:latest
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    ports:
+      - 8888:80 #TODO check the port mapping
+    restart: always
     environment:
-      WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
+      WORDPRESS_DB_HOST: ${MARIADB_HOST}
       WORDPRESS_DB_USER: ${MARIADB_USER}
       WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
-      WORDPRESS_DB_HOST: ${MARIADB_HOST}
-      # PHP_MEMORY_LIMIT: 256M
-    volumes:
-      - ./web/public_html:/var/www/html
+      WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
     depends_on:
       - db
-    # networks:
-    #   - backend
 
   # @see https://hub.docker.com/_/phpmyadmin
   phpmyadmin:
@@ -70,34 +62,31 @@ services:
     #   - backend
 
   # @see https://hub.docker.com/_/wordpress/
-  wp-cli:
-    container_name: ${COMPOSE_PROJECT_NAME}-cli
-    image: wordpress:cli
-    # build: 
-    #   context: './wp-cli/'
-    #   args:
-    #     MARIADB_NAME: ${MARIADB_DATABASE}
-    #     MARIADB_HOST: ${MARIADB_HOST}
-    #     MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-    user: 1000:1000
-    command: tail -f /dev/null # Keep the container running rather than exiting after initialization @see https://mklasen.com/adding-and-using-wp-cli-in-a-docker-compose-setup/
-    environment:
-      WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
-      WORDPRESS_DB_USER: ${MARIADB_USER}
-      WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
-      WORDPRESS_DB_HOST: ${MARIADB_HOST}
-    volumes:
-      - ./web/public_html:/var/www/html/ #TODO need to check this
-      # - ./wp-content:/var/www/html/public_html/wp-content #TODO need to check this
-      - ./backups:/var/www/backups
-      # - ./db/import:/var/www/db-import
-    depends_on:
-      - db
-      # - apache
+  # wp-cli:
+  #   container_name: ${COMPOSE_PROJECT_NAME}-cli
+  #   image: wordpress:cli
+  #   user: '33'
+  #   # command: tail -f /dev/null # Keep the container running rather than exiting after initialization @see https://mklasen.com/adding-and-using-wp-cli-in-a-docker-compose-setup/
+  #   command: >
+  #     /bin/sh -c '
+  #     sleep 10;
+  #     wp core install --path="/var/www/html" --url="http://localhost:8888" --title="Local Wordpress By Docker" --admin_user=${wp_admin} --admin_password=${wp_admin_password} --admin_email=${wp_admin_email}
+  #     '
+  #   environment:
+  #     WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
+  #     WORDPRESS_DB_USER: ${MARIADB_USER}
+  #     WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
+  #     WORDPRESS_DB_HOST: ${MARIADB_HOST}
+  #   volumes:
+  #     - ./wp-content:/var/www/html/wp-content 
+  #     - ./backups:/var/www/backups
+  #   depends_on:
+  #     - db
+  #     - wordpress
 
 volumes:
   db-data:
-  # web:
+  wp-content:
 
 # networks:
 #   backend:

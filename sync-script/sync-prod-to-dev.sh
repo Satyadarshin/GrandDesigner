@@ -39,7 +39,6 @@ done
 echo "Sync plugins, themes, and uploaded files (excluding custom theme because it is managed by Git)"
 rsync -a --progress --delete $staging_path/wp-content/uploads/ $dev_path/wp-content/uploads/
 rsync -a --progress --delete $staging_path/wp-content/plugins/ $dev_path/wp-content/plugins/
-rsync -a --progress --delete $staging_path/wp-content/themes/ $dev_path/wp-content/themes/ 
 
 echo "Back up the dev DB to $dev_host_backup_dir/stdn-stg-db.sql"
 $wp $dev_alias db export - > $dev_host_backup_dir/stdn-stg-db.sql
