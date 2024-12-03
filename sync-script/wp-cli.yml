@@ -21,4 +21,4 @@
 
 @stdn-stg:
     ssh: sdog
-    path: /www/staging5.satyadarshin.com/public_html
+    path: www/staging5.satyadarshin.com/public_html

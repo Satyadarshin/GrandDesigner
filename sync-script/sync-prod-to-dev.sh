@@ -37,26 +37,25 @@ for element in "${required_vars[@]}"; do
 done
 
 echo "Sync plugins, themes, and uploaded files (excluding custom theme because it is managed by Git)"
-rsync -a --progress --delete $prod_path/wp-content/uploads/ $dev_path/wp-content/uploads/
-rsync -a --progress --delete $prod_path/wp-content/plugins/ $dev_path/wp-content/plugins/
+rsync -a --progress --delete $staging_path/wp-content/uploads/ $dev_path/wp-content/uploads/
+rsync -a --progress --delete $staging_path/wp-content/plugins/ $dev_path/wp-content/plugins/
 
-echo "Back up the dev DB to $dev_host_backup_dir/stdn-dev.sql"
-$wp $dev_alias db export - > $dev_host_backup_dir/stdn-dev.sql
+echo "Back up the dev DB to $dev_host_backup_dir/stdn-stg-db.sql"
+$wp $dev_alias db export - > $dev_host_backup_dir/stdn-stg-db.sql
 
 $wp $dev_alias db reset --yes
 echo "Import the prod DB into dev"
 # Piping through tail +2 is a temporary workaround for a MariaDB bug @see https://mariadb.org/mariadb-dump-file-compatibility-change/
-$wp $prod_alias db export - | tail +2 | $wp $dev_alias db import -
-
-echo "Update email addresses to stop people getting emails from the dev site"
-$wp $dev_alias option update ppeb_send_confirmation_to_office_email $dev_email
-$wp $dev_alias option update ppeb_send_confirmation_from_email $dev_email
+$wp $staging_alias db export - | tail +2 | $wp $dev_alias db import -
 
 echo "Search-replace the site URL in the dev DB (this usually takes a while)"
-$wp $dev_alias search-replace $prod_url $dev_url --recurse-objects --skip-columns=guid --skip-tables=wp_users
+$wp $dev_alias search-replace $staging_url $dev_url --recurse-objects --skip-columns=guid --skip-tables=wp_users
 
 echo "Deactivate plugins which shouldn't be enabled on dev"
 $wp $dev_alias plugin deactivate updraftplus
+$wp $dev_alias plugin deactivate wordfence
+$wp $dev_alias plugin deactivate flamingo
+$wp $dev_alias plugin deactivate wp-mail-smtp
 
 # echo "Activate plugins which should be enabled on dev"
 # $wp $dev_alias plugin install --activate  query-monitor

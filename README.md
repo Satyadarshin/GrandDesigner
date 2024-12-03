@@ -1,14 +1,12 @@
 # GrandDesigner WordPress Docker Development Environment
 
-This repository contains the Docker configuration for the development environment of 
-the www.satyadarshin.com WordPress site. It mimicks the production server environment, 
-allowing us to have some confidence that if the code works in development, it should also work in production. 
+This repository contains the Docker configuration for the development environment of the www.satyadarshin.com WordPress site. It mimicks the production server environment, allowing us to have some confidence that if the code works in development, it should also work in production. 
 
 To set up the Docker development environment, follow the setup instructions below.
 
-We use a shell script (`sync-script/sync-satyadarshin-prod-to-dev.sh`) 
-to sync the database and files from the production site into your dev environment. 
-Once you've got the Docker system up and running, follow the instructions in `sync-script/sync-script.md` to set up the script.
+We use a shell script (`sync-script/sync-satyadarshin-prod-to-dev.sh`) to sync the database and files from the production site into your dev environment. Once you've got the Docker system up and running, follow the instructions in `sync-script/sync-script.md` to set up the script.
+
+This project is [based on work](https://github.com/AdhisthanaTriratna/adhisthana-docker-dev/tree/main) by Vilasamuni at Adhisthana, adapated with permission and thanks.
 
 ## Setup instructions
 

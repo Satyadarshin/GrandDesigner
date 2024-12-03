@@ -47,8 +47,7 @@ You need to install WP-CLI on your local system by following instructions [here]
 ## Optional: Copy WP-CLI Config
 The sync script relies heavily on [WP-CLI site aliases](https://make.wordpress.org/cli/handbook/guides/running-commands-remotely/#aliases). 
 WP-CLI aliases allow you to run commands to interact with a WordPress site without being in the right directory 
-or even logged into the right host, 
-and they abstract away some of the details of connecting to the sites and running commands 
+or even logged into the right host, and they abstract away some of the details of connecting to the sites and running commands 
 (including hosts in Docker containers!). All of this makes script-writing a lot easier.
 
 Optional: The scripts in the `hosting-scripts` directory will pick up aliases defined in `wp-cli.yml`, 
