@@ -9,7 +9,7 @@
 
 # Read config from .env file
 set -a            
-source .env
+source sync.env
 set +a
 
 echo "Check env vars are set"
@@ -43,8 +43,8 @@ rsync -a --progress --delete $staging_path/wp-content/themes/ $dev_path/wp-conte
 
 echo "Back up the dev DB to $dev_host_backup_dir/stdn-stg-db.sql"
 $wp $dev_alias db export - > $dev_host_backup_dir/stdn-stg-db.sql
-
 $wp $dev_alias db reset --yes
+
 echo "Import the prod DB into dev"
 # Piping through tail +2 is a temporary workaround for a MariaDB bug @see https://mariadb.org/mariadb-dump-file-compatibility-change/
 $wp $staging_alias db export - | tail +2 | $wp $dev_alias db import -
