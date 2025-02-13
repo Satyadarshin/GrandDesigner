@@ -13,7 +13,7 @@
 
 @stdn-dev:
     ssh: stdn-dev
-    path: /Users/aeneas/Satyadarshin/GrandDesigner/web/public_html
+    path: /Users/aeneas/Satyadarshin/GrandDesigner/
 
 @stdn-prd:
     ssh: sdog
