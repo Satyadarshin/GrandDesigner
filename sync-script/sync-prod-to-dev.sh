@@ -41,6 +41,8 @@ rsync -a --progress --delete $staging_path/wp-content/uploads/ $dev_path/wp-cont
 rsync -a --progress --delete $staging_path/wp-content/plugins/ $dev_path/wp-content/plugins/
 rsync -a --progress --delete $staging_path/wp-content/themes/ $dev_path/wp-content/themes/ 
 
+# $wp --path=/var/www/html
+
 echo "Back up the dev DB to $dev_host_backup_dir/stdn-stg-db.sql"
 $wp $dev_alias db export - > $dev_host_backup_dir/stdn-stg-db.sql
 $wp $dev_alias db reset --yes
@@ -54,7 +56,7 @@ $wp $dev_alias search-replace $staging_url $dev_url --recurse-objects --skip-col
 
 echo "Deactivate plugins which shouldn't be enabled on dev"
 $wp $dev_alias plugin deactivate updraftplus
-$wp $dev_alias plugin deactivate wordfence
+$wp $dev_alias wp plugin deactivate wordfence
 $wp $dev_alias plugin deactivate flamingo
 $wp $dev_alias plugin deactivate wp-mail-smtp
 

@@ -11,3 +11,8 @@ wp-content/
 *.sql
 *.vscode
 **/.DS_store
+
+# This is just a file for short terms notes
+scratch.html
+# Contains sensitive information
+wp-config.php

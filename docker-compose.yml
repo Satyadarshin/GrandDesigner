@@ -12,12 +12,14 @@ services:
       - 3306:3306
     environment:
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MARIADB-DATABASE: ${MARIADB_DATABASE}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
       MARIADB_USER: ${MARIADB_USER}
       MARIADB_PASSWORD: ${MARIADB_PASSWORD}
 
   wordpress:
     env_file: ".env"
+    networks:
+      - wordpress_network
     container_name: ${COMPOSE_PROJECT_NAME}-wp
     depends_on:
       - db
@@ -27,6 +29,7 @@ services:
     restart: always
     volumes: 
       - ./wp-content:/var/www/html/wp-content
+      - ./wp-config.php:/var/www/html/wp-config.php
       - ./backups:/var/www/backups
     environment:
       WORDPRESS_DB_HOST: ${MARIADB_HOST}
@@ -35,25 +38,29 @@ services:
       WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
 
   # @see https://hub.docker.com/_/wordpress/
-  wp-cli:
-    container_name: ${COMPOSE_PROJECT_NAME}-cli
+  wpcli:
+    env_file: ".env"
+    container_name: ${COMPOSE_PROJECT_NAME}-wpcli
     image: wordpress:cli
-    user: 1000:1000
-    # command: tail -f /dev/null # Keep the container running rather than exiting after initialization @see https://mklasen.com/adding-and-using-wp-cli-in-a-docker-compose-setup/
-    command: 'wp core install'
-    entrypoint: 'wp'
+    networks:
+      - wordpress_network
+    restart: always
+    user: '33'
+    entrypoint: ["wp"]
+    # command: tail -f /dev/null # Keeps the container running rather than exiting after initialization @see https://mklasen.com/adding-and-using-wp-cli-in-a-docker-compose-setup/
+    command: ["core install --path=/var/www/html --url=http://localhost:8000 --title=${wordpress_site} --admin_user=${wordpress_admin} --admin_password=${wordpress_admin_password} --admin_email=${wordpress_admin_email}"]
     environment:
+      WORDPRESS_DB_HOST: ${MARIADB_HOST}
       WORDPRESS_DB_NAME: ${MARIADB_DATABASE}
       WORDPRESS_DB_USER: ${MARIADB_USER}
       WORDPRESS_DB_PASSWORD: ${MARIADB_PASSWORD}
-      WORDPRESS_DB_HOST: ${MARIADB_HOST}
-    # volumes:
-    #   - ./backups:/var/www/backups
-    volumes_from:
-      - wordpress
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+      - ./wp-config.php:/var/www/html/wp-config.php
+      - ./backups:/var/www/backups
     depends_on:
-      - db
       - wordpress
+      - db
 
   phpmyadmin:
     env_file: ".env"
@@ -68,3 +75,8 @@ services:
 volumes:
     db-data:
     wp-content:
+    backups:
+
+networks:
+  wordpress_network:
+#   driver: bridge

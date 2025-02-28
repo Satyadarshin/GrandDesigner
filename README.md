@@ -33,6 +33,8 @@ Obtain a copy of the website files, and place them in `GrandDesigner/web/`
 
 In the `GrandDesigner` directory, copy `.env-example` to `.env` and set the database details. When you first start the Docker system, it will create a new database with the details you've specified. You can set the `MARIABD_*` variables to whatever you like with the exception of `MARIADB_HOST` which has to stay set as the name of the MariaDB container (defined in `docker-compose.yml`). The database passwords should be 16 characters randomly generated. 
 
+You will need to set up a wp-config.php with .env variables.
+
 #### 4. Start the Docker Containers:
 
 Run the following command from the `GrandDesigner` directory to start
